@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Isha — AI & Backend Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0f; --bg2: #111118; --bg3: #18181f;
+    --accent: #7f77dd; --accent2: #afa9ec; --accent3: #5dcaa5;
+    --text: #f0eff8; --text2: #a9a8c0; --text3: #6b6a80;
+    --border: rgba(127,119,221,0.18); --border2: rgba(127,119,221,0.08);
+    --card: #14141c;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 3rem; background: rgba(10,10,15,0.82); backdrop-filter: blur(16px); border-bottom: 0.5px solid var(--border2); }
+  .nav-logo { font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; letter-spacing: 0.05em; color: var(--accent2); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--text2); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent2); }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 3rem 4rem; position: relative; overflow: hidden; }
+  .hero-grid-bg { position: absolute; inset: 0; z-index: 0; background-image: linear-gradient(rgba(127,119,221,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(127,119,221,0.04) 1px, transparent 1px); background-size: 48px 48px; }
+  .hero-glow { position: absolute; top: -200px; right: -200px; z-index: 0; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(127,119,221,0.12) 0%, transparent 70%); }
+  .hero-glow2 { position: absolute; bottom: -100px; left: -100px; z-index: 0; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(93,202,165,0.07) 0%, transparent 70%); }
+  .hero-content { position: relative; z-index: 1; max-width: 800px; }
+  .hero-eyebrow { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.18em; color: var(--accent3); text-transform: uppercase; margin-bottom: 1.2rem; }
+  .hero-name { font-family: var(--font-head); font-size: clamp(3.2rem, 7vw, 6rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.4rem; }
+  .hero-name span { color: var(--accent); }
+  .hero-title { font-family: var(--font-head); font-size: clamp(1.2rem, 2.5vw, 1.7rem); font-weight: 400; color: var(--text2); margin-bottom: 1.8rem; }
+  .hero-desc { max-width: 560px; color: var(--text2); font-size: 1.02rem; line-height: 1.75; margin-bottom: 2.5rem; }
+  .hero-stats { display: flex; gap: 3rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+  .stat-num { font-family: var(--font-head); font-size: 2rem; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.6rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.2s; border: none; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent2); color: #fff; transform: translateY(-1px); }
+  .btn-outline { background: transparent; color: var(--text2); border: 0.5px solid var(--border); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent2); }
+  section { padding: 6rem 3rem; }
+  .section-label { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent3); margin-bottom: 0.6rem; }
+  .section-title { font-family: var(--font-head); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; color: var(--text); margin-bottom: 3rem; line-height: 1.15; }
+  .skills-section { background: var(--bg2); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; }
+  .skill-card { background: var(--card); border: 0.5px solid var(--border2); border-radius: 12px; padding: 1.4rem 1.6rem; transition: border-color 0.2s, transform 0.2s; }
+  .skill-card:hover { border-color: var(--border); transform: translateY(-2px); }
+  .skill-card-label { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .tag { font-size: 0.8rem; padding: 0.28rem 0.7rem; border-radius: 4px; background: rgba(127,119,221,0.1); color: var(--accent2); border: 0.5px solid rgba(127,119,221,0.2); font-family: var(--font-mono); }
+  .tag.green { background: rgba(93,202,165,0.1); color: var(--accent3); border-color: rgba(93,202,165,0.2); }
+  .tag.muted { background: rgba(255,255,255,0.04); color: var(--text2); border-color: var(--border2); }
+  .exp-timeline { position: relative; }
+  .exp-line { position: absolute; left: 10px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(to bottom, var(--accent), var(--accent3), transparent); opacity: 0.3; }
+  .exp-item { display: flex; gap: 2rem; margin-bottom: 3rem; padding-left: 3rem; position: relative; }
+  .exp-dot { position: absolute; left: 4px; top: 6px; width: 13px; height: 13px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); box-shadow: 0 0 12px rgba(127,119,221,0.5); flex-shrink: 0; }
+  .exp-content { background: var(--card); border: 0.5px solid var(--border2); border-radius: 12px; padding: 1.5rem 1.8rem; flex: 1; transition: border-color 0.2s; }
+  .exp-content:hover { border-color: var(--border); }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem; flex-wrap: wrap; gap: 0.5rem; }
+  .exp-role { font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; color: var(--text); }
+  .exp-date { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent3); letter-spacing: 0.06em; }
+  .exp-company { font-size: 0.88rem; color: var(--accent2); margin-bottom: 1rem; }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li { font-size: 0.9rem; color: var(--text2); padding: 0.25rem 0; padding-left: 1.1rem; position: relative; line-height: 1.6; }
+  .exp-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; top: 0.32rem; }
+  .projects-section { background: var(--bg2); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.4rem; }
+  .project-card { background: var(--card); border: 0.5px solid var(--border2); border-radius: 14px; padding: 1.7rem; display: flex; flex-direction: column; transition: border-color 0.2s, transform 0.2s; position: relative; overflow: hidden; }
+  .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent3)); opacity: 0; transition: opacity 0.2s; }
+  .project-card:hover { border-color: var(--border); transform: translateY(-3px); }
+  .project-card:hover::before { opacity: 1; }
+  .project-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; }
+  .project-icon { width: 40px; height: 40px; border-radius: 8px; background: rgba(127,119,221,0.12); border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  .project-date { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text3); }
+  .project-title { font-family: var(--font-head); font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 0.6rem; }
+  .project-desc { font-size: 0.87rem; color: var(--text2); line-height: 1.65; flex: 1; margin-bottom: 1rem; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .stack-pill { font-family: var(--font-mono); font-size: 0.73rem; padding: 0.2rem 0.55rem; border-radius: 4px; background: rgba(93,202,165,0.08); color: var(--accent3); border: 0.5px solid rgba(93,202,165,0.18); }
+  .edu-cert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  @media (max-width: 700px) { .edu-cert-grid { grid-template-columns: 1fr; } }
+  .edu-card { background: var(--card); border: 0.5px solid var(--border2); border-radius: 14px; padding: 1.8rem; }
+  .edu-degree { font-family: var(--font-head); font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: 0.3rem; }
+  .edu-uni { font-size: 0.88rem; color: var(--accent2); margin-bottom: 0.5rem; }
+  .edu-gpa { display: inline-block; padding: 0.2rem 0.7rem; border-radius: 4px; background: rgba(93,202,165,0.1); color: var(--accent3); font-family: var(--font-mono); font-size: 0.78rem; border: 0.5px solid rgba(93,202,165,0.2); }
+  .cert-list { list-style: none; }
+  .cert-item { padding: 0.7rem 0; border-bottom: 0.5px solid var(--border2); display: flex; gap: 0.7rem; align-items: flex-start; }
+  .cert-item:last-child { border-bottom: none; }
+  .cert-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 0.55rem; flex-shrink: 0; }
+  .cert-name { font-size: 0.87rem; color: var(--text2); line-height: 1.5; }
+  .cert-by { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text3); }
+  .contact-section { background: var(--bg2); }
+  .contact-inner { display: flex; gap: 2rem; flex-wrap: wrap; align-items: flex-start; }
+  .contact-left { flex: 1; min-width: 260px; }
+  .contact-right { display: flex; flex-direction: column; gap: 1rem; min-width: 240px; }
+  .contact-intro { font-size: 1rem; color: var(--text2); max-width: 400px; margin-bottom: 1.5rem; }
+  .contact-link { display: flex; align-items: center; gap: 0.9rem; background: var(--card); border: 0.5px solid var(--border2); border-radius: 10px; padding: 1rem 1.2rem; text-decoration: none; color: var(--text2); font-size: 0.9rem; transition: border-color 0.2s, color 0.2s; }
+  .contact-link:hover { border-color: var(--border); color: var(--accent2); }
+  .contact-link-icon { width: 36px; height: 36px; border-radius: 8px; background: rgba(127,119,221,0.1); border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: var(--accent); flex-shrink: 0; }
+  .contact-link-text { line-height: 1.3; }
+  .contact-link-label { font-size: 0.73rem; color: var(--text3); display: block; }
+  footer { text-align: center; padding: 2rem 3rem; border-top: 0.5px solid var(--border2); font-family: var(--font-mono); font-size: 0.76rem; color: var(--text3); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-up { animation: fadeUp 0.7s ease both; }
+  .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.22s; } .delay-3 { animation-delay: 0.36s; } .delay-4 { animation-delay: 0.5s; } .delay-5 { animation-delay: 0.65s; }
+  @media (max-width: 600px) { nav { padding: 1rem 1.2rem; } .nav-links { gap: 1rem; } section { padding: 4rem 1.4rem; } .hero { padding: 7rem 1.4rem 3rem; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">ISHA</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow fade-up">// AI & Backend Engineer</p>
+    <h1 class="hero-name fade-up delay-1">ISHA</h1>
+    <p class="hero-title fade-up delay-2">RAG Pipelines · Knowledge Graphs · Microservices</p>
+    <p class="hero-desc fade-up delay-3">Backend & AI engineer with nearly 2 years of production experience across fintech, insurance, and enterprise analytics. I build systems that process 50K+ record datasets, achieve sub-3s LLM query latency, and sustain 99.9% uptime — at scale.</p>
+    <div class="hero-stats fade-up delay-4">
+      <div class="stat-item"><div class="stat-num">50K+</div><div class="stat-label">Records Processed</div></div>
+      <div class="stat-item"><div class="stat-num">&lt;3s</div><div class="stat-label">LLM Query Latency</div></div>
+      <div class="stat-item"><div class="stat-num">99.9%</div><div class="stat-label">Uptime SLA</div></div>
+      <div class="stat-item"><div class="stat-num">−35%</div><div class="stat-label">Failed Login Rate</div></div>
+    </div>
+    <div class="hero-cta fade-up delay-5">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<section class="skills-section" id="skills">
+  <p class="section-label">01 / Technical Stack</p>
+  <h2 class="section-title">What I work with</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-card-label">AI / GenAI</div>
+      <div class="skill-tags">
+        <span class="tag">LangChain</span><span class="tag">RAG Pipelines</span><span class="tag">LLM Deployments</span><span class="tag">OpenAI API</span><span class="tag">FAISS</span><span class="tag">Pinecone</span><span class="tag">Neo4j</span><span class="tag">FastAPI</span><span class="tag">MCP</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">Languages & Backend</div>
+      <div class="skill-tags">
+        <span class="tag green">Python</span><span class="tag green">JavaScript (ES6+)</span><span class="tag green">SQL</span><span class="tag green">C++</span><span class="tag green">Node.js</span><span class="tag green">Express.js</span><span class="tag green">REST APIs</span><span class="tag green">JWT Auth</span><span class="tag green">Microservices</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">Data & Analytics</div>
+      <div class="skill-tags">
+        <span class="tag muted">Data Pipelines</span><span class="tag muted">Data Profiling</span><span class="tag muted">KPI Design</span><span class="tag muted">Power BI</span><span class="tag muted">Streamlit</span><span class="tag muted">Excel Automation</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">Cloud, Infra & Tooling</div>
+      <div class="skill-tags">
+        <span class="tag muted">Google Cloud</span><span class="tag muted">Firebase</span><span class="tag muted">PostgreSQL</span><span class="tag muted">n8n Automation</span><span class="tag muted">Web Scraping</span><span class="tag muted">Git</span><span class="tag muted">Postman</span><span class="tag muted">Jira</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <p class="section-label">02 / Work History</p>
+  <h2 class="section-title">Experience</h2>
+  <div class="exp-timeline">
+    <div class="exp-line"></div>
+    <div class="exp-item">
+      <div class="exp-dot"></div>
+      <div class="exp-content">
+        <div class="exp-header"><div class="exp-role">Data Analyst – Knowledge Initiative</div><div class="exp-date">Feb 2026 – Present</div></div>
+        <div class="exp-company">Synopsys · Noida, India · Contract</div>
+        <ul class="exp-bullets">
+          <li>Engineered Python data pipelines ingesting 50K+ enterprise knowledge records, cutting manual processing time by ~70%.</li>
+          <li>Designed a 3-KPI governance framework (Drop-off Rate, Knowledge Efficiency Ratio, YoY Growth) adopted globally.</li>
+          <li>Built duplicate-detection scripts flagging 8–12% of records as redundant, improving search precision.</li>
+          <li>Delivered executive dashboards informing the Q1 2026 knowledge governance roadmap.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dot"></div>
+      <div class="exp-content">
+        <div class="exp-header"><div class="exp-role">Software Engineer II</div><div class="exp-date">Jul 2025 – Aug 2025</div></div>
+        <div class="exp-company">ChatFin AI Technologies, Inc. · Berkeley, USA · Remote</div>
+        <ul class="exp-bullets">
+          <li>Architected RAG-based LLM system using LangChain + FAISS serving enterprise AI agents with sub-3s end-to-end query latency.</li>
+          <li>Implemented model-fallback and load-balancing logic across multi-model deployments, sustaining 99.9% uptime SLA.</li>
+          <li>Designed multi-turn conversational memory layer, reducing redundant context re-sends by ~40%.</li>
+          <li>Optimised inference pipeline, cutting average cost-per-query by 25% without degrading response quality.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dot"></div>
+      <div class="exp-content">
+        <div class="exp-header"><div class="exp-role">Software Engineer</div><div class="exp-date">Mar 2024 – Jun 2025</div></div>
+        <div class="exp-company">Canara HSBC Life Insurance · Gurugram, India</div>
+        <ul class="exp-bullets">
+          <li>Built Node.js microservices for authentication and onboarding flows serving millions of policyholder sessions.</li>
+          <li>Added OTP throttling and retry logic that reduced failed login attempts by 35%.</li>
+          <li>Served as Level-3 escalation owner for high-impact P1 incidents, achieving avg. resolution under 2 hours.</li>
+          <li>Introduced data profiling on onboarding datasets, reducing form-submission errors by 20% within 60 days.</li>
+          <li>Strengthened audit logging, contributing to zero compliance findings across two internal audit cycles.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dot" style="background: var(--accent3); box-shadow: 0 0 10px rgba(93,202,165,0.4);"></div>
+      <div class="exp-content">
+        <div class="exp-header"><div class="exp-role">Backend Developer Intern</div><div class="exp-date">Sep 2021 – Nov 2021</div></div>
+        <div class="exp-company">Paytm · Noida, India</div>
+        <ul class="exp-bullets">
+          <li>Shipped 4 Node.js API endpoints and 2 React portal features adopted in production, improving page load responsiveness by 15%.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="projects-section" id="projects">
+  <p class="section-label">03 / Selected Work</p>
+  <h2 class="section-title">Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-top"><div class="project-icon">🧾</div><div class="project-date">Apr 2026</div></div>
+      <div class="project-title">Claim Document Intelligence</div>
+      <div class="project-desc">Multi-agent LangGraph pipeline that ingests insurance claim PDFs, classifies every page into 9 document types via GPT-4o vision, then routes pages to specialist extraction agents running in parallel. Results merged into a single structured JSON via FastAPI.</div>
+      <div class="project-stack"><span class="stack-pill">Python</span><span class="stack-pill">LangGraph</span><span class="stack-pill">GPT-4o</span><span class="stack-pill">FastAPI</span><span class="stack-pill">Multi-Agent</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-top"><div class="project-icon">🕸️</div><div class="project-date">Mar 2026</div></div>
+      <div class="project-title">Enterprise AI Knowledge Graph</div>
+      <div class="project-desc">LLM-powered pipeline that parses unstructured technical documents, extracts entities and relationships, stores them in Neo4j, and enables natural language graph queries via a Cypher-generation engine.</div>
+      <div class="project-stack"><span class="stack-pill">Python</span><span class="stack-pill">LangChain</span><span class="stack-pill">Neo4j</span><span class="stack-pill">FastAPI</span><span class="stack-pill">LLM</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-top"><div class="project-icon">💬</div><div class="project-date">Sep – Oct 2025</div></div>
+      <div class="project-title">AI FAQ Chatbot (RAG-based Q&A)</div>
+      <div class="project-desc">End-to-end document ingestion and embedding pipeline using LangChain + Pinecone with semantic search and real-time streaming. Achieves &lt;3s response latency under concurrent load.</div>
+      <div class="project-stack"><span class="stack-pill">LangChain</span><span class="stack-pill">Pinecone</span><span class="stack-pill">Python</span><span class="stack-pill">RAG</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-top"><div class="project-icon">🍔</div><div class="project-date">Aug 2025</div></div>
+      <div class="project-title">Food Delivery Backend APIs</div>
+      <div class="project-desc">Modular Express.js architecture with JWT-based auth and role-based access control. PostgreSQL with optimised query patterns supporting high-frequency order and menu operations.</div>
+      <div class="project-stack"><span class="stack-pill">Node.js</span><span class="stack-pill">Express.js</span><span class="stack-pill">PostgreSQL</span><span class="stack-pill">JWT</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <p class="section-label">04 / Background</p>
+  <h2 class="section-title">Education & Certifications</h2>
+  <div class="edu-cert-grid">
+    <div class="edu-card">
+      <div class="skill-card-label" style="margin-bottom: 1rem;">Education</div>
+      <div class="edu-degree">B.Tech. in Computer Science & Engineering</div>
+      <div class="edu-uni">Graphic Era University · 2023</div>
+      <span class="edu-gpa">CGPA 8.87 / 10</span>
+    </div>
+    <div class="edu-card">
+      <div class="skill-card-label" style="margin-bottom: 0.8rem;">Certifications</div>
+      <ul class="cert-list">
+        <li class="cert-item"><div class="cert-dot"></div><div><div class="cert-name">A2A: The Agent2Agent Protocol</div><div class="cert-by">Google Cloud, IBM Research · DeepLearning.AI — Mar 2026</div></div></li>
+        <li class="cert-item"><div class="cert-dot"></div><div><div class="cert-name">Introduction to Model Context Protocol</div><div class="cert-by">Anthropic · Skilljar — Mar 2026</div></div></li>
+        <li class="cert-item"><div class="cert-dot"></div><div><div class="cert-name">TensorFlow for AI, ML & Deep Learning</div><div class="cert-by">DeepLearning.AI / Coursera — Jan 2026</div></div></li>
+        <li class="cert-item"><div class="cert-dot"></div><div><div class="cert-name">Data Visualization using Power BI</div><div class="cert-by">Dec 2025</div></div></li>
+        <li class="cert-item"><div class="cert-dot"></div><div><div class="cert-name">Data Analytics & Automation: Excel, SQL, Python</div><div class="cert-by">Oct – Nov 2025</div></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <p class="section-label">05 / Let's Connect</p>
+  <h2 class="section-title">Get in touch</h2>
+  <div class="contact-inner">
+    <div class="contact-left">
+      <p class="contact-intro">I'm seeking a high-ownership AI engineering role at a global MNC. If you're building something ambitious in AI or backend systems, let's talk.</p>
+      <a href="mailto:techbyisha@gmail.com" class="btn btn-primary">✉ techbyisha@gmail.com</a>
+    </div>
+    <div class="contact-right">
+      <a href="tel:+919855694722" class="contact-link">
+        <div class="contact-link-icon">📞</div>
+        <div class="contact-link-text"><span class="contact-link-label">Phone</span>+91 98556 94722</div>
+      </a>
+      <a href="https://linkedin.com/in/isha" target="_blank" class="contact-link">
+        <div class="contact-link-icon">in</div>
+        <div class="contact-link-text"><span class="contact-link-label">LinkedIn</span>linkedin.com/in/isha</div>
+      </a>
+      <a href="https://github.com/isha" target="_blank" class="contact-link">
+        <div class="contact-link-icon" style="font-family: monospace; font-size: 0.8rem;">&lt;/&gt;</div>
+        <div class="contact-link-text"><span class="contact-link-label">GitHub</span>github.com/isha</div>
+      </a>
+      <div class="contact-link" style="cursor: default;">
+        <div class="contact-link-icon">📍</div>
+        <div class="contact-link-text"><span class="contact-link-label">Location</span>Noida, India · Open to Remote</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & built with ♥ — Isha · 2026</p>
+</footer>
+
+</body>
+</html>
